@@ -17,9 +17,9 @@ public static class RegisterServiceClass
         services.AddScoped<IResturantService, ResturantService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IMenuService, MenuService>();
-        services.AddScoped<IOrderService, OrderService>();
-        services.AddScoped<ICourierService, CourierService>();
-        services.AddDbContext<DataContext>(opt => 
-            opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        // services.AddScoped<IOrderService, OrderService>();
+        // services.AddScoped<ICourierService, CourierService>();
+        // services.AddDbContext<DataContext>(opt => 
+        //     opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
     }
 }
