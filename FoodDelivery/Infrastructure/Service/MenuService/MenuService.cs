@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.DTO_s.MenuDto;
 using Domain.DTO_s.OrderDto;
 using Domain.Entities;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,27 @@ namespace Infrastructure.Service.MenuService;
 
 public class MenuService(DataContext context, IMapper mapper) : IMenuService
 {
-    public async Task<ApiResponse<List<GetMenuDto>>> GetAll()
+    public async Task<PaginationResponse<List<GetMenuDto>>> GetAll(MenuFilter filter)
     {
-        var menu = await context.Menus.ToListAsync();
-        var menus = mapper.Map<List<GetMenuDto>>(menu);
-        return new ApiResponse<List<GetMenuDto>>(menus);
+        IQueryable<Menu> menus = context.Menus;
+        if (!string.IsNullOrEmpty(filter.Name))
+            menus = menus.Where(m => m.Name.ToLower().Contains(filter.Name.ToLower()));
+        if (!string.IsNullOrEmpty(filter.Category))
+            menus = menus.Where(m => m.Category.ToLower().Contains(filter.Category.ToLower()));
+        if (filter.PreparationTime.HasValue) 
+            menus = menus.Where(m=>m.PreparationTime == filter.PreparationTime);
+        if (filter.Weight.HasValue)
+            menus = menus.Where(m => m.Weight == filter.Weight);
+        if (filter.Price.HasValue)
+            menus = menus.Where(m => m.Price == filter.Price);
+        if (filter.RestaurantId.HasValue)
+            menus = menus.Where(m=>m.RestaurantId == filter.RestaurantId);
+        int total = await menus.CountAsync();
+        var result = menus.Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .Select(x=>mapper.Map<GetMenuDto>(x))
+            .ToList();
+        return new PaginationResponse<List<GetMenuDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
     public async Task<ApiResponse<GetMenuDto>> GetById(int id)

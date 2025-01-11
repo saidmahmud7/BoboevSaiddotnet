@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.DTO_s.ResturantDto;
 using Domain.Entities;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,27 @@ namespace Infrastructure.Service.ResturantService;
 
 public class ResturantService(DataContext context, IMapper mapper) : IResturantService
 {
-    public async Task<ApiResponse<List<GetResturantDto>>> GetAll()
+    public async Task<PaginationResponse<List<GetResturantDto>>> GetAll(RestaurantFilter filter)
     {
-        var resturant = await context.Resturants
-            .Include(x=>x.Menus)
-            .ToListAsync();
-        var resturantDto = mapper.Map<List<GetResturantDto>>(resturant);
-        return new ApiResponse<List<GetResturantDto>>(resturantDto);
+        
+        IQueryable<Restaurant> restaurants = context.Resturants;
+        if (!string.IsNullOrEmpty(filter.Name)) 
+            restaurants = restaurants.Where(x=>x.Name.ToLower().Contains(filter.Name.ToLower()));
+        if(!string.IsNullOrEmpty(filter.Address)) 
+            restaurants = restaurants.Where(x => x.Address.ToLower().Contains(filter.Address.ToLower()));
+        if (filter.Rating.HasValue) 
+            restaurants = restaurants.Where(x=>x.Rating == filter.Rating);
+        if (!string.IsNullOrEmpty(filter.Description))
+            restaurants = restaurants.Where(x => x.Description.ToLower().Contains(filter.Description.ToLower()));
+        if (!string.IsNullOrEmpty(filter.ContactPhone))
+            restaurants = restaurants.Where(x => x.ContactPhone.ToLower().Contains(filter.ContactPhone.ToLower()));
+        
+        int total = await restaurants.CountAsync();
+        var result = restaurants.Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .Select(x=>mapper.Map<GetResturantDto>(x))
+            .ToList();
+        return new PaginationResponse<List<GetResturantDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
     public async Task<ApiResponse<GetResturantDto>> GetById(int id)

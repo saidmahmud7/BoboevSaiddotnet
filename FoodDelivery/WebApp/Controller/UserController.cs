@@ -1,5 +1,6 @@
 ﻿using Domain.DTO_s.ResturantDto;
 using Domain.DTO_s.UserDto;
+using Domain.Filters;
 using Infrastructure.Response;
 using Infrastructure.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace WebApp.Controller;
 public class UserController(IUserService service)
 {
     [HttpGet]
-    public async Task<ApiResponse<List<GetUserDto>>> GetResturants() => await service.GetAll();
+    public async Task<PaginationResponse<List<GetUserDto>>> GetResturants([FromQuery]UserFilter filter) => await service.GetAll(filter);
     [HttpGet("{id}")]
     public async Task<ApiResponse<GetUserDto>> GetResturant(int id) => await service.GetById(id);
     [HttpPost]
