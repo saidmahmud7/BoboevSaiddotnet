@@ -5,6 +5,7 @@ using Domain.DTO_s.CourierDto;
 using Domain.DTO_s.MenuDto;
 using Domain.DTO_s.OrderDto;
 using Domain.Entities;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,22 @@ namespace Infrastructure.Service.OrderService;
 
 public class OrderService(DataContext context, IMapper mapper) : IOrderService
 {
-    public async Task<ApiResponse<List<GetOrderDto>>> GetAll()
+    public async Task<PaginationResponse<List<GetOrderDto>>> GetAll(OrderFilter filter)
     {
-        var order = await context.Orders.ToListAsync();
-        var orders = mapper.Map<List<GetOrderDto>>(order);
-        return new ApiResponse<List<GetOrderDto>>(orders);
+        IQueryable<Order> orders = context.Orders;
+        if (filter.OrderStatus.HasValue)
+            orders = orders.Where(x => x.OrderStatus == filter.OrderStatus);
+        if (filter.TotalAmount.HasValue)
+            orders = orders.Where(x => x.TotalAmount == filter.TotalAmount);
+        if (!string.IsNullOrEmpty(filter.DeliveryAddress))
+            orders = orders.Where(x => x.DeliveryAddress.ToLower().Contains(filter.DeliveryAddress.ToLower()));
+        int total = await orders.CountAsync();
+        var result = await orders
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .Select(x=> mapper.Map<GetOrderDto>(x))
+            .ToListAsync();
+        return new PaginationResponse<List<GetOrderDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
     public async Task<ApiResponse<GetOrderDto>> GetById(int id)

@@ -1,5 +1,6 @@
 ﻿using Domain.DTO_s.MenuDto;
 using Domain.DTO_s.ResturantDto;
+using Domain.Filters;
 using Infrastructure.Response;
 using Infrastructure.Service.MenuService;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace WebApp.Controller;
 public class MenuController(IMenuService service) : Microsoft.AspNetCore.Mvc.Controller
 {
     [HttpGet]
-    public async Task<ApiResponse<List<GetMenuDto>>> GetMenu() => await service.GetAll();
+    public async Task<PaginationResponse<List<GetMenuDto>>> GetMenu([FromQuery]MenuFilter filter) => await service.GetAll(filter);
 
     [HttpGet("{id}")]
     public async Task<ApiResponse<GetMenuDto>> GetMenu(int id) => await service.GetById(id);
@@ -24,4 +25,10 @@ public class MenuController(IMenuService service) : Microsoft.AspNetCore.Mvc.Con
 
     [HttpDelete]
     public async Task<ApiResponse<string>> Delete(int id) => await service.DeleteMenu(id);
+    [HttpGet("task2")]
+    public async Task<ApiResponse<List<GetMenuDto>>> GetTask2() => await service.Task2();
+    [HttpGet("GetAvarageByCategory")]
+    public async Task<ApiResponse<List<GetAvarageByCategory>>> GetTask4() => await service.Task4();
+    [HttpGet("GetCategoryWithCountOfFood")]
+    public async Task<ApiResponse<GetCategoryWithCountOfFood>> Task10() => await service.Task10();
 }

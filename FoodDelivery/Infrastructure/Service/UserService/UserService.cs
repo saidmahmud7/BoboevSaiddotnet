@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.DTO_s.UserDto;
 using Domain.Entities;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,28 @@ namespace Infrastructure.Service.UserService;
 
 public class UserService(DataContext context, IMapper mapper) : IUserService
 {
-    public async Task<ApiResponse<List<GetUserDto>>> GetAll()
+    public async Task<PaginationResponse<List<GetUserDto>>> GetAll(UserFilter filter)
     {
-        var user = await context.Users
-            .Include(x => x.Orders)
+        IQueryable<User> users = context.Users;
+        if (!string.IsNullOrEmpty(filter.Name)) 
+            users = users.Where(x => x.Name.ToLower().Contains(filter.Name.ToLower()));
+        if (!string.IsNullOrEmpty(filter.Email))
+            users = users.Where(x => x.Email.ToLower().Contains(filter.Email.ToLower()));
+        if (!string.IsNullOrEmpty(filter.Phone))
+            users = users.Where(x=>x.Phone.ToLower().Contains(filter.Phone.ToLower()));
+        if (!string.IsNullOrEmpty(filter.Address))
+            users = users.Where(x=>x.Address.ToLower().Contains(filter.Address.ToLower()));
+        if (filter.Role.HasValue)
+            users = users.Where(x => x.Role == filter.Role);
+        if (filter.RegistrationDate is not null)
+            users = users.Where(x => x.RegistrationDate == filter.RegistrationDate);
+        int total = await users.CountAsync();
+        var result = await users
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .Select(x=>mapper.Map<GetUserDto>(x))
             .ToListAsync();
-        var userDto = mapper.Map<List<GetUserDto>>(user);
-        return new ApiResponse<List<GetUserDto>>(userDto);
+        return new PaginationResponse<List<GetUserDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
     public async Task<ApiResponse<GetUserDto>> GetById(int id)

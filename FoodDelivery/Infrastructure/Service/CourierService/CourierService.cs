@@ -3,21 +3,33 @@ using AutoMapper;
 using Domain.DTO_s.CourierDto;
 using Domain.DTO_s.UserDto;
 using Domain.Entities;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Service.CourierService;
 
-public class CourierService(DataContext context,IMapper mapper) :ICourierService
+public class CourierService(DataContext context, IMapper mapper) : ICourierService
 {
-    public async Task<ApiResponse<List<GetCourierDto>>> GetAll()
+    public async Task<PaginationResponse<List<GetCourierDto>>> GetAll(CourierFilter filter)
     {
-        var courier = await context.Couriers
-            .Include(x => x.Orders)
-            .ToListAsync();
-        var courierDto = mapper.Map<List<GetCourierDto>>(courier);
-        return new ApiResponse<List<GetCourierDto>>(courierDto);
+        IQueryable<Courier> couriers = context.Couriers;
+        if (filter.UserId.HasValue)
+            couriers = couriers.Where(x => x.UserId == filter.UserId);
+        if (filter.Status.HasValue)
+            couriers = couriers.Where(x => x.Status == filter.Status);
+        if (!string.IsNullOrEmpty(filter.CurrentLocation))
+            couriers = couriers.Where(x => x.CurrentLocation.ToLower().Contains(filter.CurrentLocation.ToLower()));
+        if (filter.Rating.HasValue)
+            couriers = couriers.Where(x => x.Rating == filter.Rating);
+        int total = couriers.Count();
+        var result = couriers.Skip((filter.PageNumber - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .Select(x => mapper.Map<GetCourierDto>(x))
+            .ToList();
+        
+        return new PaginationResponse<List<GetCourierDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
     public async Task<ApiResponse<GetCourierDto>> GetById(int id)
@@ -76,6 +88,6 @@ public class CourierService(DataContext context,IMapper mapper) :ICourierService
     {
         var couriers = await context.Couriers.OrderByDescending(x => x.Rating).Take(5).ToListAsync();
         var res = mapper.Map<List<GetFiveTopCourier>>(couriers);
-        return  new ApiResponse<List<GetFiveTopCourier>>(res);
+        return new ApiResponse<List<GetFiveTopCourier>>(res);
     }
 }
