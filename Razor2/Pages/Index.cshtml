@@ -1,0 +1,14 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Динамическое приветствие";
+}
+
+<h1>@Model.GreetingMessage</h1>
+
+<form method="post">
+    <label for="userName">Введите ваше имя:</label>
+    <input type="text" id="userName" name="UserName" value="@Model.UserName" />
+    <button type="submit">Приветствовать</button>
+</form> 

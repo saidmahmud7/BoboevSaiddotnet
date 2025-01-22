@@ -1,0 +1,43 @@
+@page "/feedback"
+@model FeedbackModel
+@{
+    ViewData["Title"] = "Feedback Page";
+}
+
+<h1>Send feedbacks</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Feedback.Name"></label>
+        <input type="text" class="form-control" asp-for="Feedback.Name">
+        <span class="form-text text-danger" asp-validation-for="Feedback.Name"></span>
+    </div>
+
+    <div class="form-group">
+    <label asp-for="Feedback.Email"></label>
+    <input type="email" class="form-control" asp-for="Feedback.Email">
+    <span class="form-text text-danger" asp-validation-for="Feedback.Email"></span>
+    </div>
+
+    <div class="form-group">
+    <label asp-for="Feedback.FeedbackMessage"></label>
+    <input type="text" class="form-control" asp-for="Feedback.FeedbackMessage">
+    <span class="form-text text-danger" asp-validation-for="Feedback.FeedbackMessage"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+
+
+
+
+<h2>Feedbacks</h2>
+
+@foreach(var a in Model.Request)
+{
+            <li style="margin-bottom: 15px; border: 1px solid #ccc; padding: 10px;">
+                <strong>@a.Name</strong> (<em>@a.Email</em>)<br />
+                @a.FeedbackMessage<br />
+            </li>
+}
