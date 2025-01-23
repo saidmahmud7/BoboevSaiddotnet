@@ -1,0 +1,32 @@
+@page "/product"
+@model ProductModel
+@{
+    ViewData["Title"] = "Список продуктов";
+}
+
+<h1>Список продуктов</h1>
+
+<form method="get">
+    <input type="text" name="searchQuery" value="@Model.SearchQuery" placeholder="Поиск по названию..." />
+    <button type="submit">Поиск</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var el in Model.Products)
+        {
+            <tr>
+                <td>@el.Id</td>
+                <td>@el.Name</td>
+                <td>@el.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using Domain.DTO_s.OrderDetailDto;
+using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
+using Domain.Entities;
 
 namespace Infrastructure.Service.OrderDetail;
 
-public class OrderDetail(DataContext context,IMapper mapper) :IOrderDetail
+public class OrderDetailService(DataContext context,IMapper mapper) :IOrderDetail
 {
-    public Task<ApiResponse<List<GetOrderDetailDto>>> GetAll()
+    public Task<PaginationResponse<List<GetOrderDetailDto>>> GetAll(OrderDetailFilter filter)
     {
         throw new NotImplementedException();
     }
