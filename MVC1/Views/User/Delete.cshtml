@@ -1,0 +1,11 @@
+@model MVC1.Models.UserModel
+
+<div class="container mt-4">
+    <h2 class="mb-4">Удалить пользователя</h2>
+    <p>Вы уверены, что хотите удалить пользователя <strong>@Model.FisrtName @Model.LatName</strong>?</p>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="/User/Index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

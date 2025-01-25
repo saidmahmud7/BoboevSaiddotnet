@@ -1,0 +1,26 @@
+@model MVC1.Models.UserModel
+
+<div class="container mt-4">
+    <h2 class="mb-4">Редактировать пользователя</h2>
+    <form asp-action="Update" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="form-group mb-3">
+            <label for="FirstName">Имя</label>
+            <input type="text" id="FirstName" name="FisrtName" class="form-control" value="@Model.FisrtName" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="LastName">Фамилия</label>
+            <input type="text" id="LastName" name="LatName" class="form-control" value="@Model.LatName" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+        </div>
+        <div class="form-group mb-3">
+            <label for="Age">Возраст</label>
+            <input type="number" id="Age" name="Age" class="form-control" value="@Model.Age" required />
+        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="/User/Index" class="btn btn-secondary">Назад</a>
+    </form>
+</div>
