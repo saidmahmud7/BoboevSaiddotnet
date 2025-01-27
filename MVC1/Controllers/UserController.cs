@@ -1,39 +1,41 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MVC1.Data;
 using MVC1.Models;
 
 namespace MVC1.Controllers;
 
-public class UserController : Controller
+public class UserController(DataContext context) : Controller
 {
-    public static List<UserModel> Users { get; set; } = new List<UserModel>();
-    public IActionResult Index()
+    public List<UserModel> Users { get; set; } = new List<UserModel>();
+    public async Task<IActionResult> Index()
     {
+        Users = await context.Users.ToListAsync();
         return View(Users);
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
         return View();
     }
 
     [HttpPost]
-    public IActionResult Create(UserModel user)
+    public async Task<IActionResult> Create(UserModel user)
     {
         if (ModelState.IsValid)
         {
-            user.Id = Users.Count > 0 ? Users.Max(u => u.Id) + 1 : 1;
-            Users.Add(user);
-
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         return View(user);
     }
     [HttpGet]
-    public IActionResult Update(int id)
+    public async Task<IActionResult> Update(int id)
     {
-        var user = Users.FirstOrDefault(u => u.Id == id);
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
         if (user == null)
         {
             return NotFound();
@@ -42,47 +44,49 @@ public class UserController : Controller
         return View(user);
     }
     [HttpPost]
-    public IActionResult Update(UserModel user)
+    public async Task<IActionResult> Update(UserModel request)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            var existing = Users.FirstOrDefault(u => u.Id == user.Id);
-            if (existing == null)
-            {
-                return NotFound();
-            }
-            existing.FisrtName = user.FisrtName;
-            existing.LatName = user.LatName;
-            existing.Email = user.Email;
-            existing.Age = user.Age;
-            return RedirectToAction("Index");
+            return View(request);
         }
 
-        return View(user);
-    }
-
-    [HttpPost]
-    public IActionResult Delete(int id)
-    {
-        var user = Users.FirstOrDefault(u => u.Id == id);
+        var user = await context.Users.FirstOrDefaultAsync(x => x.Id == request.Id);
         if (user == null)
         {
             return NotFound();
         }
+        user.FisrtName = request.FisrtName;
+        user.LatName = request.LatName;
+        user.Email = request.Email;
+        user.Age = request.Age;
 
-        Users.Remove(user);
-
+        await context.SaveChangesAsync();
         return RedirectToAction("Index");
     }
-    public IActionResult Details(int id)
+
+   [HttpPost]
+    public async Task<IActionResult> Delete(int id)
     {
-        var user = Users.FirstOrDefault(u => u.Id == id);
-        if (user == null)
+        var u =await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+        if (u == null)
         {
             return NotFound();
         }
 
-        return View(user);
+        context.Users.Remove(u);
+        await context.SaveChangesAsync();
+        return RedirectToAction("Index");
+    }
+    public async Task<IActionResult> Details(int id)
+    {
+        var u = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        if (u == null)
+        {
+            return NotFound();
+        }
+
+        return View(u);
     }
 }
 

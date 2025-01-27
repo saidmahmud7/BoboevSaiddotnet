@@ -1,0 +1,16 @@
+﻿@model Domain.Category
+
+<h2>Детали категории</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Название: @Model.Name</h5>
+        <p class="card-text">Описание: @Model.Description</p>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Назад</a>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mt-3">Редактировать</a>
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline">
+    <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Вы уверены?')">Удалить</button>
+</form>

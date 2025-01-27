@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using MVC1.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 //mvc
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DataContext>(opt =>
+            opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

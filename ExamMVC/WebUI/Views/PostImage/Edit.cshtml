@@ -1,0 +1,18 @@
+@model Domain.PostImage
+
+@{
+    ViewData["Title"] = "Edit Image";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" id="Description" name="description" value="@Model.Description" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
+<a href="@Url.Action("Index", "PostImage")" class="btn btn-secondary">Back to List</a>

@@ -1,25 +1,115 @@
 @model MVC1.Models.UserModel
 
-<div class="container mt-4">
-    <h2 class="mb-4">Добавить нового пользователя</h2>
-    <form asp-action="Create" method="post">
-        <div class="form-group mb-3">
-            <label for="FirstName">Имя</label>
-            <input type="text" id="FirstName" name="FisrtName" class="form-control" value="@Model?.FisrtName" required />
+<!-- Include Font Awesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-dark">Добавить нового пользователя</h2>
+    <form asp-action="Create" method="post" class="form-container">
+        <div class="form-group mb-4">
+            <label for="FirstName" class="font-weight-bold text-primary">
+                <i class="fas fa-user"></i> Имя
+            </label>
+            <input type="text" id="FirstName" name="FisrtName" class="form-control custom-input" value="@Model?.FisrtName" required />
         </div>
-        <div class="form-group mb-3">
-            <label for="LastName">Фамилия</label>
-            <input type="text" id="LastName" name="LatName" class="form-control" value="@Model?.LatName" required />
+        <div class="form-group mb-4">
+            <label for="LastName" class="font-weight-bold text-primary">
+                <i class="fas fa-user-tag"></i> Фамилия
+            </label>
+            <input type="text" id="LastName" name="LatName" class="form-control custom-input" value="@Model?.LatName" required />
         </div>
-        <div class="form-group mb-3">
-            <label for="Email">Email</label>
-            <input type="email" id="Email" name="Email" class="form-control" value="@Model?.Email" required />
+        <div class="form-group mb-4">
+            <label for="Email" class="font-weight-bold text-primary">
+                <i class="fas fa-envelope"></i> Email
+            </label>
+            <input type="email" id="Email" name="Email" class="form-control custom-input" value="@Model?.Email" required />
         </div>
-        <div class="form-group mb-3">
-            <label for="Age">Возраст</label>
-            <input type="number" id="Age" name="Age" class="form-control" value="@Model?.Age" required />
+        <div class="form-group mb-4">
+            <label for="Age" class="font-weight-bold text-primary">
+                <i class="fas fa-birthday-cake"></i> Возраст
+            </label>
+            <input type="number" id="Age" name="Age" class="form-control custom-input" value="@Model?.Age" required />
         </div>
-        <button type="submit" class="btn btn-success">Сохранить</button>
-        <a href="/User/Index" class="btn btn-secondary">Назад</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn custom-btn btn-lg px-4 py-2">
+                <i class="fas fa-save"></i> Сохранить
+            </button>
+            <a href="/User/Index" class="btn btn-outline-secondary btn-lg px-4 py-2">
+                <i class="fas fa-arrow-left"></i> Назад
+            </a>
+        </div>
     </form>
 </div>
+
+<!-- Add this custom CSS for design -->
+<style>
+    .form-container {
+        background-color: #f0f8ff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: 600px;
+        margin: 0 auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-input {
+        background-color: #ffffff;
+        border: 2px solid #a7c5eb;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 1.1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-input:focus {
+        border-color: #ff6f61;
+        box-shadow: 0 0 8px rgba(255, 111, 97, 0.5);
+        outline: none;
+    }
+
+    .custom-btn {
+        background: linear-gradient(135deg, #ff6f61, #ff8c42);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease,  0.3s ease;
+    }
+
+    .custom-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #ff8c42, #ff6f61);
+    }
+
+    .btn-outline-secondary {
+        border: 2px solid #a7c5eb;
+        color: #333;
+        border-radius: 30px;
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-outline-secondary:hover {
+        border-color: #333;
+        color: #ff6f61;
+        transform: scale(1.05);
+    }
+
+    /* Icon styling */
+    .form-group i {
+        color: #6c63ff;
+        margin-right: 10px;
+    }
+
+    .btn i {
+        margin-right: 8px;
+    }
+</style>

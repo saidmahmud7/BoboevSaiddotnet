@@ -1,0 +1,23 @@
+@model Domain.PostImage
+
+@{
+    ViewData["Title"] = "Delete Image";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are you sure you want to delete the following image?</h3>
+
+<div>
+    <strong>Image Path:</strong> @Model.ImagePath
+    <br />
+    <strong>Description:</strong> @Model.Description
+    <br />
+    <strong>Upload Date:</strong> @Model.UploadDate
+</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+<a href="@Url.Action("Index", "PostImage")" class="btn btn-primary">Back to List</a>

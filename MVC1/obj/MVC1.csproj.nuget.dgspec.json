@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\MVC1\\MVC1.csproj": {}
+    "C:\\Users\\Lenovo\\Desktop\\SaidBoboevDotnet\\MVC1\\MVC1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\MVC1\\MVC1.csproj": {
+    "C:\\Users\\Lenovo\\Desktop\\SaidBoboevDotnet\\MVC1\\MVC1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\MVC1\\MVC1.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\SaidBoboevDotnet\\MVC1\\MVC1.csproj",
         "projectName": "MVC1",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\MVC1\\MVC1.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\Desktop\\SaidBoboevDotnet\\MVC1\\MVC1.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\MVC1\\obj\\",
+        "outputPath": "C:\\Users\\Lenovo\\Desktop\\SaidBoboevDotnet\\MVC1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -42,6 +42,22 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

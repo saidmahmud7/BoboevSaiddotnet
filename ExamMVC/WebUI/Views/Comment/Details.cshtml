@@ -1,0 +1,29 @@
+﻿@model Domain.Comment
+
+@{
+    ViewData["Title"] = "Comment Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="form-group">
+    <label>Content:</label>
+    <p>@Model.Content</p>
+</div>
+
+<div class="form-group">
+    <label>Author Name:</label>
+    <p>@Model.AuthorName</p>
+</div>
+
+<div class="form-group">
+    <label>Post:</label>
+    <p>@Model.Post?.Title</p>
+</div>
+
+<div class="form-group">
+    <label>Created Date:</label>
+    <p>@Model.CreatedDate</p>
+</div>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
