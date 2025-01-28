@@ -1,0 +1,19 @@
+﻿@model Domain.Post
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Удалить пост</h2>
+
+    <form asp-action="Delete" method="post">
+        <div class="alert alert-danger">
+            <strong>Внимание!</strong> Вы уверены, что хотите удалить этот пост?
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Заголовок</label>
+            <input type="text" class="form-control" value="@Model.Title" disabled />
+        </div>
+
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Domain.Post>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Список постов</h2>
+    <a asp-action="Create" class="btn btn-success mb-3">
+        <i class="bi bi-plus-circle"></i> Добавить пост
+    </a>
+
+    <div class="card shadow-lg rounded">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Заголовок</th>
+                        <th scope="col">Категория</th>
+                        <th scope="col" class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">Нет доступных постов.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var post in Model)
+                        {
+                            <tr>
+                                <td>@post.Id</td>
+                                <td>@post.Title</td>
+                                <td>@post.Category?.Name</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Details" asp-route-id="@post.Id" class="btn btn-info btn-sm text-white">
+                                            <i class="bi bi-eye"></i> Детали
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-warning btn-sm text-dark">
+                                            <i class="bi bi-pencil"></i> Изменить
+                                        </a>
+                                        <form asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены?')">
+                                                <i class="bi bi-trash"></i> Удалить
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

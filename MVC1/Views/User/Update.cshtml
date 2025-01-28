@@ -1,0 +1,84 @@
+@model MVC1.Models.UserModel
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center text-primary fw-bold">Редактировать пользователя</h2>
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4">
+                    <form asp-action="Update" method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+
+                        <div class="form-group mb-4">
+                            <label for="FirstName" class="form-label fw-semibold">🌟 Имя</label>
+                            <input type="text" id="FirstName" name="FisrtName" class="form-control border-primary" value="@Model.FisrtName" required placeholder="Введите имя" />
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="LastName" class="form-label fw-semibold">🌟 Фамилия</label>
+                            <input type="text" id="LastName" name="LatName" class="form-control border-primary" value="@Model.LatName" required placeholder="Введите фамилию" />
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="Email" class="form-label fw-semibold">📧 Email</label>
+                            <input type="email" id="Email" name="Email" class="form-control border-primary" value="@Model.Email" required placeholder="Введите email" />
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="Age" class="form-label fw-semibold">🎂 Возраст</label>
+                            <input type="number" id="Age" name="Age" class="form-control border-primary" value="@Model.Age" required placeholder="Введите возраст" />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success btn-lg shadow">
+                                <i class="bi bi-check-circle me-2"></i>Сохранить
+                            </button>
+                            <a href="/User/Index" class="btn btn-secondary btn-lg shadow">
+                                <i class="bi bi-arrow-left me-2"></i>Назад
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    h2 {
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .card {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+    }
+    .form-label {
+        color: #fff;
+    }
+    .form-control {
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .form-control:focus {
+        border-color: #ff7e5f;
+        box-shadow: 0 0 5px rgba(255, 126, 95, 0.5);
+    }
+    .btn-success {
+        background: #ff7e5f;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    .btn-success:hover {
+        background: #feb47b;
+    }
+    .btn-secondary {
+        background: #6a11cb;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+        background: #2575fc;
+    }
+</style>

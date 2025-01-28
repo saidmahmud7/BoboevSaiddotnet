@@ -1,0 +1,26 @@
+@model Domain.PostImage
+
+@{
+    ViewData["Title"] = "Image Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h2>Image Details</h2>
+    <dl class="row">
+        <dt class="col-sm-2">Image Path</dt>
+        <dd class="col-sm-10">@Model.ImagePath</dd>
+
+        <dt class="col-sm-2">Description</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+
+        <dt class="col-sm-2">Upload Date</dt>
+        <dd class="col-sm-10">@Model.UploadDate</dd>
+
+        <dt class="col-sm-2">Post ID</dt>
+        <dd class="col-sm-10">@Model.PostId</dd>
+    </dl>
+
+    <a href="@Url.Action("Index", "PostImage")" class="btn btn-primary">Back to List</a>
+</div>

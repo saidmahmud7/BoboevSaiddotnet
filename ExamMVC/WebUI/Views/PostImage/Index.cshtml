@@ -1,0 +1,35 @@
+@model IEnumerable<Domain.PostImage>
+
+@{
+    ViewData["Title"] = "Post Images";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Upload Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var image in Model)
+        {
+            <tr>
+                <td><img src="@image.ImagePath" alt="Image" width="100" /></td>
+                <td>@image.Description</td>
+                <td>@image.UploadDate</td>
+                <td>
+                    <a href="@Url.Action("Edit", "PostImage", new { id = image.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", "PostImage", new { id = image.Id })">Delete</a> |
+                    <a href="@Url.Action("Details", "PostImage", new { id = image.Id })">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "PostImage", new { postId = 1 })" class="btn btn-primary">Add New Image</a>

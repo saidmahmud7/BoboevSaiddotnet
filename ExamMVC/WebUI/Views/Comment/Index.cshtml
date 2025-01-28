@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Domain.Comment>
+
+@{
+    ViewData["Title"] = "Comments";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Comment</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Content</th>
+            <th>Post Title</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in Model)
+        {
+            <tr>
+                <td>@comment.AuthorName</td>
+                <td>@comment.Content</td>
+                <td>@comment.Post?.Title</td>
+                <td>@comment.CreatedDate</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = comment.Id })" class="btn btn-warning">Edit</a>
+                    <form action="@Url.Action("Delete", new { id = comment.Id })" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

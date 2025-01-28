@@ -1,0 +1,46 @@
+﻿@model Domain.Comment
+
+@{
+    ViewData["Title"] = "Create Comment";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Content">Content</label>
+        <input type="text" class="form-control" id="Content" name="Content" value="@Model?.Content" required />
+    </div>
+
+    <div class="form-group">
+        <label for="AuthorName">Author Name</label>
+        <input type="text" class="form-control" id="AuthorName" name="AuthorName"
+               value="@Model?.AuthorName ?? string.Empty" required />
+    </div>
+
+    <div class="form-group">
+        <label for="PostId">Post</label>
+        <select class="form-control" id="PostId" name="PostId" required>
+            @if (ViewBag.Posts != null)
+            {
+                var posts = ViewBag.Posts as IEnumerable<SelectListItem>;
+                if (posts != null)
+                {
+                    foreach (var post in posts)
+                     {
+                         @* <option value="@post.Value" 
+                                 @((post.Value == Model.PostId.ToString()) ? "selected" : "")> 
+                            @post.Text
+                        </option>  *@
+                    }
+                }
+            }
+            else
+            {
+                <option value="">No posts available</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

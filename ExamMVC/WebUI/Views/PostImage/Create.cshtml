@@ -1,0 +1,25 @@
+@model Domain.PostImage
+
+@{
+    ViewData["Title"] = "Create Image";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" id="Description" name="description" value="@Model.Description" required />
+    </div>
+
+    <div class="form-group">
+        <label for="file">Image File</label>
+        <input type="file" class="form-control" id="file" name="file" required />
+    </div>
+
+    <input type="hidden" name="postId" value="@Model.PostId" />
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<a href="@Url.Action("Index", "PostImage")" class="btn btn-secondary">Back to List</a>
