@@ -13,7 +13,7 @@ public class PostImageController(IPostImage service) : Controller
     }
     public IActionResult Create(int postId)
     {
-        return View(new PostImage { PostId = postId });
+        return View(new PostImage { Id = postId });
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -37,7 +37,7 @@ public class PostImageController(IPostImage service) : Controller
 
             var postImage = new PostImage
             {
-                PostId = postId,
+                Id = postId,
                 ImagePath = "/images/" + file.FileName,
                 Description = description,
                 UploadDate = DateTime.UtcNow
@@ -52,7 +52,7 @@ public class PostImageController(IPostImage service) : Controller
         }
 
         ModelState.AddModelError("", "Please select a valid image.");
-        return View(new PostImage { PostId = postId });
+        return View(new PostImage { Id = postId });
     }
 
     public async Task<IActionResult> Edit(int id)
