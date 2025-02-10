@@ -8,7 +8,7 @@ public class StudentService(DataContext context) : IStudentService
 {
     public async Task<List<Student>> Students()
     {
-        return await context.Students.ToListAsync();
+        return await context.Students.Include(s => s.Group).ToListAsync();
     }
 
     public async Task<Student> StudentById(int id)
