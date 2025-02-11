@@ -18,8 +18,7 @@
     </div>
 
     <input type="hidden" name="postId" value="@Model.PostId" />
-
-    <button type="submit" class="btn btn-primary">Create</button>
+    <a href="@Url.Action("Index", "PostImage")" class="btn btn-secondary">Create</a>
 </form>
 
 <a href="@Url.Action("Index", "PostImage")" class="btn btn-secondary">Back to List</a>

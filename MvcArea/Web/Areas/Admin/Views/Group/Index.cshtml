@@ -1,0 +1,156 @@
+﻿@model IEnumerable<Domain.Entities.Group>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-info:hover {
+            background-color: #117a8b;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #bd2130;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .table-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        form {
+            display: inline;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Groups</h1>
+
+    <div class="table-container">
+        <a asp-action="Create" class="btn btn-primary">Create New Group</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model)
+                {
+                    <tr>
+                        <td>@group.Id</td>
+                        <td>@group.Name</td>
+                        <td>@group.Description</td>
+                        <td>@group.CreatedAt.ToString("g")</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a asp-action="Edit" asp-route-id="@group.Id" class="btn btn-warning">Edit</a>
+                                <a asp-action="Details" asp-route-id="@group.Id" class="btn btn-info">Details</a>
+                                <form asp-action="Delete" asp-route-id="@group.Id" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
