@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,15 +66,14 @@ namespace Infrastructure.Migrations
                     PreparationTime = table.Column<int>(type: "integer", nullable: false),
                     Weight = table.Column<int>(type: "integer", nullable: false),
                     PhotoUrl = table.Column<string>(type: "text", nullable: false),
-                    RestaurantId = table.Column<int>(type: "integer", nullable: false),
-                    ResturantId = table.Column<int>(type: "integer", nullable: false)
+                    RestaurantId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Menus", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Menus_Resturants_ResturantId",
-                        column: x => x.ResturantId,
+                        name: "FK_Menus_Resturants_RestaurantId",
+                        column: x => x.RestaurantId,
                         principalTable: "Resturants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -118,7 +117,6 @@ namespace Infrastructure.Migrations
                     PaymentStatus = table.Column<int>(type: "integer", nullable: false),
                     CourierId = table.Column<int>(type: "integer", nullable: false),
                     RestaurantId = table.Column<int>(type: "integer", nullable: false),
-                    ResturantId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -131,8 +129,8 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Resturants_ResturantId",
-                        column: x => x.ResturantId,
+                        name: "FK_Orders_Resturants_RestaurantId",
+                        column: x => x.RestaurantId,
                         principalTable: "Resturants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -179,9 +177,9 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menus_ResturantId",
+                name: "IX_Menus_RestaurantId",
                 table: "Menus",
-                column: "ResturantId");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_MenuItemId",
@@ -199,9 +197,9 @@ namespace Infrastructure.Migrations
                 column: "CourierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ResturantId",
+                name: "IX_Orders_RestaurantId",
                 table: "Orders",
-                column: "ResturantId");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",

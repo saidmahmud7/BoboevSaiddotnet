@@ -1,0 +1,48 @@
+2025-02-22 14:15:57.482 +03:00 [INF] Now listening on: http://localhost:5071
+2025-02-22 14:16:02.074 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-22 14:16:02.077 +03:00 [INF] Hosting environment: Development
+2025-02-22 14:16:02.103 +03:00 [INF] Content root path: C:\Users\LENOVO\Desktop\SaidBoboevDotnet\FoodDelivery\WebApp
+2025-02-22 14:16:15.025 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/ - null null
+2025-02-22 14:16:15.940 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-02-22 14:16:16.036 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/ - 404 0 null 1039.768ms
+2025-02-22 14:16:16.151 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5071/, Response status code: 404
+2025-02-22 14:16:17.202 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/ - null null
+2025-02-22 14:16:17.699 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/ - 404 0 null 507.2258ms
+2025-02-22 14:16:18.206 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5071/, Response status code: 404
+2025-02-22 14:16:18.428 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/ - null null
+2025-02-22 14:16:18.630 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/ - 404 0 null 202.6847ms
+2025-02-22 14:16:18.716 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5071/, Response status code: 404
+2025-02-22 14:16:23.191 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/swagger/index.html - null null
+2025-02-22 14:16:24.035 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/swagger/index.html - 200 null text/html;charset=utf-8 844.7321ms
+2025-02-22 14:16:24.988 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/swagger/v1/swagger.json - null null
+2025-02-22 14:16:26.095 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 1106.395ms
+2025-02-22 14:16:41.721 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/api/Resturant - null null
+2025-02-22 14:16:42.037 +03:00 [INF] Executing endpoint 'WebApp.Controller.ResturantController.GetResturants (WebApp)'
+2025-02-22 14:16:42.828 +03:00 [INF] Route matched with {action = "GetResturants", controller = "Resturant"}. Executing controller action with signature System.Threading.Tasks.Task`1[Infrastructure.Response.PaginationResponse`1[System.Collections.Generic.List`1[Domain.DTO_s.ResturantDto.GetResturantDto]]] GetResturants(Domain.Filters.RestaurantFilter) on controller WebApp.Controller.ResturantController (WebApp).
+2025-02-22 14:16:50.670 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:16:50.676 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:16:50.902 +03:00 [INF] Executing ObjectResult, writing value of type 'Infrastructure.Response.PaginationResponse`1[[System.Collections.Generic.List`1[[Domain.DTO_s.ResturantDto.GetResturantDto, Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-22 14:16:50.989 +03:00 [INF] Executed action WebApp.Controller.ResturantController.GetResturants (WebApp) in 8080.9583ms
+2025-02-22 14:16:50.993 +03:00 [INF] Executed endpoint 'WebApp.Controller.ResturantController.GetResturants (WebApp)'
+2025-02-22 14:16:51.014 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/api/Resturant - 200 null application/json; charset=utf-8 9296.0001ms
+2025-02-22 14:18:18.190 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/api/Courier - null null
+2025-02-22 14:18:18.288 +03:00 [INF] Executing endpoint 'WebApp.Controller.CourierController.GetResturants (WebApp)'
+2025-02-22 14:18:18.412 +03:00 [INF] Route matched with {action = "GetResturants", controller = "Courier"}. Executing controller action with signature System.Threading.Tasks.Task`1[Infrastructure.Response.PaginationResponse`1[System.Collections.Generic.List`1[Domain.DTO_s.CourierDto.GetCourierDto]]] GetResturants(Domain.Filters.CourierFilter) on controller WebApp.Controller.CourierController (WebApp).
+2025-02-22 14:18:18.687 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:18:18.690 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:18:18.745 +03:00 [INF] Selected
+2025-02-22 14:18:18.754 +03:00 [INF] Executing ObjectResult, writing value of type 'Infrastructure.Response.PaginationResponse`1[[System.Collections.Generic.List`1[[Domain.DTO_s.CourierDto.GetCourierDto, Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-22 14:18:18.843 +03:00 [INF] Executed action WebApp.Controller.CourierController.GetResturants (WebApp) in 428.7409ms
+2025-02-22 14:18:18.848 +03:00 [INF] Executed endpoint 'WebApp.Controller.CourierController.GetResturants (WebApp)'
+2025-02-22 14:18:18.851 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/api/Courier - 200 null application/json; charset=utf-8 667.6884ms
+2025-02-22 14:18:27.209 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5071/api/Courier?Status=1&TransportType=1 - null null
+2025-02-22 14:18:27.213 +03:00 [INF] Executing endpoint 'WebApp.Controller.CourierController.GetResturants (WebApp)'
+2025-02-22 14:18:27.216 +03:00 [INF] Route matched with {action = "GetResturants", controller = "Courier"}. Executing controller action with signature System.Threading.Tasks.Task`1[Infrastructure.Response.PaginationResponse`1[System.Collections.Generic.List`1[Domain.DTO_s.CourierDto.GetCourierDto]]] GetResturants(Domain.Filters.CourierFilter) on controller WebApp.Controller.CourierController (WebApp).
+2025-02-22 14:18:27.487 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:18:27.487 +03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2025-02-22 14:18:27.499 +03:00 [INF] Selected
+2025-02-22 14:18:27.502 +03:00 [INF] Executing ObjectResult, writing value of type 'Infrastructure.Response.PaginationResponse`1[[System.Collections.Generic.List`1[[Domain.DTO_s.CourierDto.GetCourierDto, Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-22 14:18:27.503 +03:00 [INF] Executed action WebApp.Controller.CourierController.GetResturants (WebApp) in 284.6918ms
+2025-02-22 14:18:27.504 +03:00 [INF] Executed endpoint 'WebApp.Controller.CourierController.GetResturants (WebApp)'
+2025-02-22 14:18:27.505 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5071/api/Courier?Status=1&TransportType=1 - 200 null application/json; charset=utf-8 296.2261ms
+2025-02-22 14:18:46.400 +03:00 [INF] Application is shutting down...

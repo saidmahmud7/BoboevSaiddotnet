@@ -7,10 +7,11 @@ using Domain.Filters;
 using Infrastructure.Data;
 using Infrastructure.Response;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Service.CourierService;
 
-public class CourierService(DataContext context, IMapper mapper) : ICourierService
+public class CourierService(DataContext context, IMapper mapper,ILogger<CourierService> logger) : ICourierService
 {
     public async Task<PaginationResponse<List<GetCourierDto>>> GetAll(CourierFilter filter)
     {
@@ -29,6 +30,7 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
             .Select(x => mapper.Map<GetCourierDto>(x))
             .ToList();
         
+        logger.LogInformation("Selected");
         return new PaginationResponse<List<GetCourierDto>>(filter.PageSize, filter.PageNumber, total, result);
     }
 
@@ -36,6 +38,7 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
     {
         var courier = await context.Resturants.FirstOrDefaultAsync(x => x.Id == id);
         var courierDto = mapper.Map<GetCourierDto>(courier);
+        logger.LogInformation("GetById");
         return new ApiResponse<GetCourierDto>(courierDto);
     }
 
@@ -44,6 +47,7 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
         var couriers = mapper.Map<Courier>(courier);
         context.Couriers.Add(couriers);
         var res = await context.SaveChangesAsync();
+        logger.LogInformation("Created");
         return res == 0
             ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
             : new ApiResponse<string>(HttpStatusCode.OK, "Corurier created");
@@ -54,6 +58,7 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
         var existingCourier = await context.Couriers.FirstOrDefaultAsync(x => x.Id == courier.Id);
         if (existingCourier == null)
         {
+            logger.LogWarning("Courier not found");
             return new ApiResponse<string>(HttpStatusCode.NotFound, "Corurier not found");
         }
 
@@ -64,6 +69,7 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
         existingCourier.TransportType = courier.TransportType;
         existingCourier.UserId = courier.UserId;
         var res = await context.SaveChangesAsync();
+        logger.LogInformation("Updated");   
         return res == 0
             ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
             : new ApiResponse<string>(HttpStatusCode.OK, "Courier updated");
@@ -74,11 +80,13 @@ public class CourierService(DataContext context, IMapper mapper) : ICourierServi
         var existingCourier = await context.Couriers.FirstOrDefaultAsync(x => x.Id == id);
         if (existingCourier == null)
         {
+            logger.LogWarning("Notfound");
             return new ApiResponse<string>(HttpStatusCode.NotFound, "Courier not found");
         }
 
         context.Remove(existingCourier);
         var res = await context.SaveChangesAsync();
+        logger.LogInformation("Deleted");
         return res == 0
             ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
             : new ApiResponse<string>(HttpStatusCode.OK, "Courier deleted");
