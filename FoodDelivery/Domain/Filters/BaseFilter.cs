@@ -5,7 +5,7 @@ public record BaseFilter
     public int PageSize { get; init; }
     public int PageNumber { get; init; }
 
-    public BaseFilter()
+    protected BaseFilter()
     {
         PageNumber = 1;
         PageSize = 10;

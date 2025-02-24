@@ -7,8 +7,26 @@ using Infrastructure.Service.OrderService;
 using Infrastructure.Service.ResturantService;
 using Infrastructure.Service.UserService;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Loggers/logs.txt", rollingInterval: RollingInterval.Day)
+    .Filter.ByExcluding(logEvent =>
+    {
+        // Исключаем логи с категорией "Microsoft.EntityFrameworkCore.Database.Command"
+        if (logEvent.Properties.TryGetValue("SourceContext", out var sourceContext))
+        {
+            var sourceContextValue = sourceContext.ToString();
+            return sourceContextValue.Contains("Microsoft.EntityFrameworkCore.Database.Command");
+        }
+        return false;
+    })
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
