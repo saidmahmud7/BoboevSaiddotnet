@@ -7,9 +7,8 @@ namespace Infrastructure.Service.CategoryService;
 public interface ICategoryService
 {
     Task<PaginationResponse<List<GetCategoryDto>>> GetAll(CategoryFilter filter);
-    Task<ApiResponse<GetCategoryDto>> GetById(int id );
-    Task<ApiResponse<string>> Create(AddCategoryDto category);
-    Task<ApiResponse<string>> Update(UpdateCategoryDto category);
+    Task<ApiResponse<string>> Create(AddCategoryDto request);
+    Task<ApiResponse<string>> Update(UpdateCategoryDto request);
     Task<ApiResponse<string>> Delete(int id);
 
 }
