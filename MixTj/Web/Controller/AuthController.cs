@@ -1,7 +1,7 @@
 using Domain.Dtos.AuthDto;
 using Infrastructure.Responses;
 using Infrastructure.Seed;
-using Infrastructure.Service.AuthService;
+using Infrastructure.Service.AuthServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

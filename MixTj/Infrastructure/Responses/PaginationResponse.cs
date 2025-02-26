@@ -1,17 +1,29 @@
+using System.Net;
 using Domain.Filter;
 
 namespace Infrastructure.Responses;
 
-public class PaginationResponse<T> : BaseFilter
+public class PaginationResponse<T> : ApiResponse<T>
 {
-    public int TotalPages { get; set; }
-    public int TotalRecords { get; set; }
-    public T? Data { get; set; }
-
-    public PaginationResponse(int pageSize, int pageNumber, int totalRecords, T data) : base(pageNumber, pageSize)
+    public int PageNumber { get; set; } // 2
+    public int PageSize { get; set; } // 12
+    public int TotalPages { get; set; } // 30
+    public int TotalRecords { get; set; } // 350
+    
+    public PaginationResponse(T data, int totalRecords, int pageNumber, int pageSize) : base(data)
     {
-        Data = data;
         TotalRecords = totalRecords;
         TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+    }
+
+    public PaginationResponse(HttpStatusCode code, string error) : base(code, error)
+    {
+    }
+
+    public PaginationResponse()
+    {
+        
     }
 }

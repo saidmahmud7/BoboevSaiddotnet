@@ -3,68 +3,75 @@ using AutoMapper;
 using Domain.Dtos.CategoryDto;
 using Domain.Entities;
 using Domain.Filter;
-using Infrastructure.Data;
 using Infrastructure.Responses;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Service.CategoryService;
 
-public class CategoryService(DataContext context,IMapper mapper) : ICategoryService
+public class CategoryService(ICategoryRepository categoryRepository) : ICategoryService
 {
     public async Task<PaginationResponse<List<GetCategoryDto>>> GetAll(CategoryFilter filter)
     {
-        IQueryable<Category> categories = context.Categories;
-        if (!string.IsNullOrEmpty(filter.Name))
-            categories = categories.Where(x=>x.Name.ToLower().Contains(filter.Name.ToLower()));
-        int total = await categories.CountAsync();
-        var result = await categories.Skip((filter.PageNumber - 1) * filter.PageSize)
+        var categories = await categoryRepository.GetAll(filter);
+
+        var totalRecords = categories.Count;
+        var data = categories
+            .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
-            .Select(x => mapper.Map<GetCategoryDto>(x))
-            .ToListAsync();
-        return new PaginationResponse<List<GetCategoryDto>>(filter.PageSize, filter.PageNumber, total, result);
+            .ToList();
 
+        var result = data.Select(c => new GetCategoryDto()
+        {
+            Id = c.Id,
+            Name = c.Name,
+        }).ToList();
+
+        return new PaginationResponse<List<GetCategoryDto>>(result, totalRecords, filter.PageNumber, filter.PageSize);
     }
 
-    public async Task<ApiResponse<GetCategoryDto>> GetById(int id)
+
+
+    public async Task<ApiResponse<string>> Create(AddCategoryDto request)
     {
-        var category = await context.Categories.FirstOrDefaultAsync(x=>x.Id == id);
+        var category = new Category()
+        {
+            Name = request.Name,
+        };
+
+        var result = await categoryRepository.CreateCategory(category);
+
+        return result == 1
+            ? new ApiResponse<string>("Success")
+            : new ApiResponse<string>(HttpStatusCode.BadRequest, "Failed");
+    }
+
+    public async Task<ApiResponse<string>> Update(UpdateCategoryDto request)
+    {
+        var category = await categoryRepository.GetCategory(c => c.Id == request.Id);
+
         if (category == null)
-            return new ApiResponse<GetCategoryDto>(HttpStatusCode.NotFound, "Category Not Found");
-        var categoryDto = mapper.Map<GetCategoryDto>(category);
-        return new ApiResponse<GetCategoryDto>(categoryDto);
-    }
+        {
+            return new ApiResponse<string>(HttpStatusCode.NotFound, "Category not found");
+        }
 
-    public async Task<ApiResponse<string>> Create(AddCategoryDto category)
-    {
-        var categories = mapper.Map<Category>(category);
-        await context.Categories.AddAsync(categories);
-        var res = await context.SaveChangesAsync();
-        return res == 0
-            ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
-            : new ApiResponse<string>(HttpStatusCode.OK, "Category created");
-    }
+        category.Name = request.Name;
 
-    public async Task<ApiResponse<string>> Update(UpdateCategoryDto category)
-    {
-        var existing = await context.Categories.FirstOrDefaultAsync(x=>x.Id == category.Id);
-        if (existing == null)
-            return new ApiResponse<string>(HttpStatusCode.NotFound, "Category Not Found");
-        existing.Name = category.Name;
-        var res = await context.SaveChangesAsync();
-        return res == 0
-            ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
-            : new ApiResponse<string>(HttpStatusCode.OK, "Category updated");
+        var result = await categoryRepository.UpdateCategory(category);
+        return result == 1
+            ? new ApiResponse<string>("Success")
+            : new ApiResponse<string>(HttpStatusCode.BadRequest, "Failed");
     }
 
     public async Task<ApiResponse<string>> Delete(int id)
     {
-        var existing = await context.Categories.FirstOrDefaultAsync(x=>x.Id == id);
-        if (existing == null)
-            return new ApiResponse<string>(HttpStatusCode.NotFound, "Category Not Found");
-        context.Remove(existing);
-        var res = await context.SaveChangesAsync();
-        return res == 0
-            ? new ApiResponse<string>(HttpStatusCode.InternalServerError, "Internal Server Error")
-            : new ApiResponse<string>(HttpStatusCode.OK, "Category deleted");
+        var category = await categoryRepository.GetCategory(c => c.Id == id);
+        if (category == null)
+        {
+            return new ApiResponse<string>(HttpStatusCode.NotFound, "Category not found");
+        }
+
+        var result = await categoryRepository.DeleteCategory(category);
+        return result == 1
+            ? new ApiResponse<string>("Success")
+            : new ApiResponse<string>(HttpStatusCode.BadRequest, "Failed");
     }
 }

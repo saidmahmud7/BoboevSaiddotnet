@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Extensions;
 
-public static class AuthService
+public static class AuthServices
 {
     public static void AuthConfigureServices(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
@@ -33,7 +33,7 @@ public static class AuthService
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = configuration["Jwt:Issuer"],
                     ValidAudience = configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"] ?? string.Empty))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
                 };
             });
 

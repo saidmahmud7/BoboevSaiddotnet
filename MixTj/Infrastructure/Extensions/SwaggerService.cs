@@ -3,7 +3,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Infrastructure.Extensions;
 
-public static class SwaggerService
+public static class SwaggerServices
 {
     public static void SwaggerConfigurationServices(this IServiceCollection serviceCollection)
     {
@@ -13,7 +13,7 @@ public static class SwaggerService
             {
                 Title = "Sample web API",
                 Version = "v1",
-                Description = "API Services.",
+                Description = "Sample API Services.",
                 Contact = new OpenApiContact { Name = "Said" },
             });
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
