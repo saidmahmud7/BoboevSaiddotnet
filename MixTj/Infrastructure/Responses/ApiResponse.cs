@@ -20,4 +20,9 @@ public class ApiResponse<T>
         StatusCode = (int)statusCode;
         Message = message;
     }
+
+    protected ApiResponse()
+    {
+        
+    }
 }

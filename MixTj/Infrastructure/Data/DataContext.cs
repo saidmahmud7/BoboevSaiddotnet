@@ -13,4 +13,5 @@ public class DataContext(DbContextOptions<DataContext> options) :IdentityDbConte
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Subscription> Subscriptions { get; set;}
     public DbSet<Reaction> Reactions { get; set; }
+    
 }
